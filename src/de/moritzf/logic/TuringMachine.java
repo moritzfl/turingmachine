@@ -25,10 +25,11 @@ public class TuringMachine {
 
     public List<TuringStep> executeTuringMachine(int maxNumberOfSteps, String startingState){
         List<TuringStep> steps = new ArrayList<>();
-        int[] startPosition = {1,1};
+        int[] startPosition = new int[input.size()];
 
         for (int i = 0; i < input.size(); i++) {
             input.set(i, EMPTY_FIELD + input.get(i));
+            startPosition[i] = 1;
         }
 
         steps.add(new TuringStep(input, startingState,  startPosition , false));
