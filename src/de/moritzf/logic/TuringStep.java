@@ -20,7 +20,7 @@ public class TuringStep {
         return position;
     }
 
-    public Collection<String> getBands() {
+    public List<String> getBands() {
 
         return bands;
     }
@@ -38,7 +38,7 @@ public class TuringStep {
 
     public String getSymbolsAtCurrentPositions(){
         String symbols = "";
-        for (int i = 0; i < bands.size() -1 ; i++){
+        for (int i = 0; i < bands.size() ; i++){
             symbols += bands.get(i).charAt(position[i]);
         }
 

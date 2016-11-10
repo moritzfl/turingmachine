@@ -6,6 +6,15 @@ package de.moritzf.logic;
 public class TuringTask {
 
     private String inputState;
+
+    public TuringTask(String inputState, String inputSymbols, String outputSymbols, String directions, String outputState) {
+        this.inputState = inputState;
+        this.inputSymbols = inputSymbols;
+        this.outputSymbols = outputSymbols;
+        this.directions = directions;
+        this.outputState = outputState;
+    }
+
     private String inputSymbols;
     private String outputSymbols;
     private String directions;
@@ -15,41 +24,25 @@ public class TuringTask {
         return inputSymbols;
     }
 
-    public void setInputSymbols(String inputSymbols) {
-        this.inputSymbols = inputSymbols;
-    }
 
     public String getOutputSymbols() {
         return outputSymbols;
-    }
-
-    public void setOutputSymbols(String outputSymbols) {
-        this.outputSymbols = outputSymbols;
     }
 
     public String getDirections() {
         return directions;
     }
 
-    public void setDirections(String directions) {
-        this.directions = directions;
-    }
 
     public String getOutputState() {
         return outputState;
     }
 
-    public void setOutputState(String outputState) {
-        this.outputState = outputState;
-    }
 
     public String getInputState() {
         return inputState;
     }
 
-    public void setInputState(String inputState) {
-        this.inputState = inputState;
-    }
 
 
     public boolean checkTaskForBandNumber(int numberOfBands){
