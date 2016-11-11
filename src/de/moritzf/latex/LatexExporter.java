@@ -10,6 +10,7 @@ import java.util.List;
 public class LatexExporter {
 
     public static final String MATRIX_SEPARATOR = "$\\\\$";
+    public static final String MULTIBAND_SEPARATOR = "\n$\\\\.....................\\\\$\n\n";
 
     public static String generateLatex(List<TuringStep> steps) {
         String protocol = "";
@@ -18,11 +19,11 @@ public class LatexExporter {
             if (currentStep.getBands().size() == 1) {
                 protocol += generateSegmentForSingleBandContext(steps, i);
             } else {
-                protocol += generateSegmentForMultiBandContext(steps, i);
+                protocol += generateSegmentForMultiBandContext(steps, i) + MULTIBAND_SEPARATOR;
             }
         }
 
-        return "$" + protocol + "$";
+        return protocol;
 
     }
 
@@ -38,7 +39,7 @@ public class LatexExporter {
         boolean equalContent = i > 0 && currentStep.getBands().get(0).equals(steps.get(i - 1).getBands().get(0));
 
         if (!equalContent) {
-            segment += "\\begin{smallmatrix} \n";
+            segment += "$\n\\begin{smallmatrix} \n";
             for (int j = 0; j < currentBand.length(); j++) {
                 segment += currentBand.charAt(j);
 
@@ -57,6 +58,7 @@ public class LatexExporter {
         String arrowPart = "";
         String statePart = "";
         for (int j = 0; j < currentBand.length(); j++) {
+
             if (j == currentPosition) {
                 arrowPart += " \\uparrow ";
                 statePart += currentState;
@@ -72,9 +74,9 @@ public class LatexExporter {
         segment += arrowPart + "\\\\ \n" + statePart;
 
         if (i == steps.size() - 1) {
-            segment += " \n\\end{smallmatrix}  \n";
+            segment += " \n\\end{smallmatrix}\n$  \n";
         } else if (!currentBand.equals(steps.get(i + 1).getBands().get(0))) {
-            segment += " \n\\end{smallmatrix} \n" + MATRIX_SEPARATOR + "\n";
+            segment += " \n\\end{smallmatrix}\n$ \n" + MATRIX_SEPARATOR + "\n";
 
         } else {
             segment += "\\\\";
@@ -85,7 +87,58 @@ public class LatexExporter {
     }
 
     private static String generateSegmentForMultiBandContext(List<TuringStep> steps, int i) {
-        return "";
+
+        String segment = "";
+        TuringStep currentStep = steps.get(i);
+        List<String> currentBands = currentStep.getBands();
+        String currentState = currentStep.getState();
+
+
+        for (int j = 0; j < currentBands.size(); j++) {
+            int currentPosition = currentStep.getPosition()[j];
+            segment += "$\n \\begin{smallmatrix} \n";
+
+            String currentBand = currentBands.get(j);
+
+
+            segment += "[" + (j + 1) + "] & ";
+            for (int k = 0; k < currentBand.length(); k++) {
+                segment += currentBand.charAt(j);
+
+                if (k < currentBand.length() - 1) {
+                    segment += " & ";
+                }
+            }
+
+            segment += "\\\\ \n";
+
+            String arrowPart = " & ";
+            String statePart = " & ";
+
+            for (int k = 0; k < currentBand.length(); k++) {
+                if (k == currentPosition) {
+                    arrowPart += " \\uparrow  ";
+                    statePart += currentState;
+                }
+
+                if (k < currentBand.length() - 1) {
+                    arrowPart += " & ";
+                    statePart += " & ";
+                }
+
+            }
+
+            segment += arrowPart + "\\\\ \n" + statePart + " \n\\end{smallmatrix} \n$ \n";
+
+            if (j != currentBands.size() - 1) {
+                segment += "\n" + MATRIX_SEPARATOR + "\n\n";
+            }
+
+
+        }
+
+
+        return segment;
     }
 
 }
