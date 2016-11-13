@@ -103,7 +103,7 @@ public class LatexExporter {
 
             segment += "[" + (j + 1) + "] & ";
             for (int k = 0; k < currentBand.length(); k++) {
-                segment += currentBand.charAt(j);
+                segment += currentBand.charAt(k);
 
                 if (k < currentBand.length() - 1) {
                     segment += " & ";

@@ -64,4 +64,9 @@ public class TuringTask {
         return bandNumberMatchesTaskValues;
 
     }
+
+    public String toString(){
+        return this.getInputState() + " " + this.getInputSymbols() + " " + this.getOutputSymbols() + " "
+                + this.getDirections() + " " + this.getOutputState();
+    }
 }

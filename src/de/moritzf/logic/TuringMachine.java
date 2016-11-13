@@ -28,9 +28,11 @@ public class TuringMachine {
         int[] startPosition = new int[input.size()];
 
         for (int i = 0; i < input.size(); i++) {
-            input.set(i, EMPTY_FIELD + input.get(i));
+            input.set(i, EMPTY_FIELD + input.get(i) + EMPTY_FIELD);
             startPosition[i] = 1;
+            System.out.println(input.get(i));
         }
+
 
         steps.add(new TuringStep(input, startingState,  startPosition , false));
 

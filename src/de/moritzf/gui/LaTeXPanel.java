@@ -48,6 +48,7 @@ public class LaTeXPanel extends JPanel {
      */
     private String expression;
 
+
     /**
      * Instantiates a new LaTeX panel.
      *
@@ -60,6 +61,15 @@ public class LaTeXPanel extends JPanel {
         this.render();
     }
 
+    public LaTeXPanel() {
+        this(null);
+    }
+
+    public void setExpression(String expression){
+        this.expression = expression;
+        this.render();
+    }
+
 
 
 
@@ -67,17 +77,25 @@ public class LaTeXPanel extends JPanel {
      * Renders the formula.
      */
     public void render() {
+        String expressionUsed = "null";
+        if (this.expression != null){
+            expressionUsed = this.expression;
+        }
+
         try {
             // create a formula
-            TeXFormula formula = new TeXFormula(this.expression);
+            TeXFormula formula = new TeXFormula(expressionUsed);
 
             TeXIcon ticon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, FONT_SIZE_TEX , TeXConstants.UNIT_PIXEL, 80,
                     TeXConstants.ALIGN_LEFT);
+            this.removeAll();
             this.add(new JLabel(ticon));
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        this.validate();
+        this.repaint();
 
     }
 
