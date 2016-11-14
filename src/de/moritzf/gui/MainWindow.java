@@ -23,12 +23,11 @@ import java.util.List;
  */
 public class MainWindow extends JFrame implements ActionListener , FocusListener {
 
-    JButton start = new JButton("Start");
-    JTextArea bandsTxtArea = new JTextArea();
-    JTextArea taskListTxtArea = new JTextArea();
-    LaTeXPanel protocolPanel = new LaTeXPanel();
-    Highlighter.HighlightPainter errorPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
-    Highlighter.HighlightPainter bandNumberMismatchPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.ORANGE);
+    private JButton start = new JButton("Start");
+    private JTextArea bandsTxtArea = new JTextArea();
+    private JTextArea taskListTxtArea = new JTextArea();
+    private LaTeXPanel protocolPanel = new LaTeXPanel();
+    private Highlighter.HighlightPainter errorPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
 
     public MainWindow() {
         super("Turing");
@@ -56,6 +55,7 @@ public class MainWindow extends JFrame implements ActionListener , FocusListener
 
         left.add(start, BorderLayout.SOUTH);
         start.addActionListener(this);
+        taskListTxtArea.addFocusListener(this);
 
         JPanel leftTop = new JPanel();
         leftTop.setLayout(new BorderLayout());
@@ -132,13 +132,11 @@ public class MainWindow extends JFrame implements ActionListener , FocusListener
                 highLightTextInTaskArea(line, errorPainter);
                 error = true;
             } else {
-
-
                 TuringTask task = new TuringTask(lineParts[0], lineParts[1], lineParts[2], lineParts[3], lineParts[4]);
                 if (task.checkTaskForBandNumber(numberOfBands)){
                     tasks.add(task);
                 } else {
-                    highLightTextInTaskArea(line, bandNumberMismatchPainter);
+                    highLightTextInTaskArea(line, errorPainter);
                     error = true;
                 }
             }
