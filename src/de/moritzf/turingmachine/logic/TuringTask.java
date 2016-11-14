@@ -20,7 +20,6 @@
 package de.moritzf.turingmachine.logic;
 
 /**
- *
  * Class TuringTask. This class stores values for tasks of a turingmachine.
  * Created by moritz on 10.11.16.
  */
@@ -105,19 +104,19 @@ public class TuringTask {
      * @param numberOfBands the number of bands
      * @return the boolean
      */
-    public boolean checkTaskForBandNumber(int numberOfBands){
+    public boolean checkTaskForBandNumber(int numberOfBands) {
 
         boolean bandNumberMatchesTaskValues = true;
 
-        if (inputSymbols.length() !=  numberOfBands){
+        if (inputSymbols.length() != numberOfBands) {
             bandNumberMatchesTaskValues = false;
         }
 
-        if (outputSymbols.length() !=  numberOfBands){
+        if (outputSymbols.length() != numberOfBands) {
             bandNumberMatchesTaskValues = false;
         }
 
-        if (directions.length() !=  numberOfBands){
+        if (directions.length() != numberOfBands) {
             bandNumberMatchesTaskValues = false;
         }
 
@@ -125,7 +124,7 @@ public class TuringTask {
 
     }
 
-    public String toString(){
+    public String toString() {
         return this.getInputState() + " " + this.getInputSymbols() + " " + this.getOutputSymbols() + " "
                 + this.getDirections() + " " + this.getOutputState();
     }

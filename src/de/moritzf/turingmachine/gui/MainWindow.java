@@ -44,6 +44,7 @@ import java.util.List;
 public class MainWindow extends JFrame implements ActionListener, FocusListener, ChangeListener {
 
     private JButton start = new JButton("Start");
+    private static final Font TEXT_AREA_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 14);
     private JMenuItem saveProtocolMenuItem = new JMenuItem("Save Protocol");
     private JMenuItem saveTasksMenuItem = new JMenuItem("Save Tasks");
     private JMenuItem increaseFontSize = new JMenuItem("Increase Font Size");
@@ -64,6 +65,11 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
         super("Turing");
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
+        taskListTxtArea.setFont(TEXT_AREA_FONT);
+        bandsTxtArea.setFont(TEXT_AREA_FONT);
+
         //Create the menu bar.
         JMenuBar menuBar = new JMenuBar();
 
@@ -121,13 +127,17 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
         formattingPanel.setLayout(new BorderLayout());
         formattingPanel.add(protocolPanel, BorderLayout.WEST);
 
-        right.add(new JScrollPane(formattingPanel), BorderLayout.CENTER);
+        JScrollPane protocolScrollPane = new JScrollPane(formattingPanel);
+        protocolScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+        protocolScrollPane.getHorizontalScrollBar().setUnitIncrement(20);
+
+        right.add(protocolScrollPane, BorderLayout.CENTER);
         formattingPanel.setBackground(Color.white);
 
         JPanel startPanel = new JPanel();
 
 
-        startPanel.setLayout(new GridLayout(0,1));
+        startPanel.setLayout(new GridLayout(0, 1));
         startPanel.add(numberOfSteps);
         startPanel.add(stepSlider);
         startPanel.add(start);
@@ -200,7 +210,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
             this.repaint();
         } else if (e.getSource().equals(saveProtocolMenuItem)) {
             SaveFile.saveLaTeX(this, protocolPanel.getExpression());
-        } else if (e.getSource().equals(saveTasksMenuItem)){
+        } else if (e.getSource().equals(saveTasksMenuItem)) {
             SaveFile.saveFile(this, "txt", taskListTxtArea.getText());
         }
 
@@ -271,6 +281,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void focusGained(FocusEvent e) {

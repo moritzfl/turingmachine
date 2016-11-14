@@ -132,7 +132,7 @@ public class LatexPanel extends JPanel {
     /**
      * Refresh.
      */
-    public void refresh(){
+    public void refresh() {
         this.setExpression(this.expression);
     }
 

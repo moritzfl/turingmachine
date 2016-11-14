@@ -40,7 +40,7 @@ public class TuringMachine {
      * @param tasks the tasks
      * @param input the input
      */
-    public TuringMachine(List<TuringTask> tasks, List<String> input){
+    public TuringMachine(List<TuringTask> tasks, List<String> input) {
         this.tasks = tasks;
         this.input = input;
     }
@@ -52,7 +52,7 @@ public class TuringMachine {
      * @param maxNumberOfSteps the max number of steps
      * @return the list
      */
-    public List<TuringStep> executeTuringMachine(int maxNumberOfSteps){
+    public List<TuringStep> executeTuringMachine(int maxNumberOfSteps) {
         return executeTuringMachine(maxNumberOfSteps, tasks.get(0).getInputState());
     }
 
@@ -64,7 +64,7 @@ public class TuringMachine {
      * @param startingState    the starting state
      * @return the list
      */
-    public List<TuringStep> executeTuringMachine(int maxNumberOfSteps, String startingState){
+    public List<TuringStep> executeTuringMachine(int maxNumberOfSteps, String startingState) {
         List<TuringStep> steps = new ArrayList<>();
         int[] startPosition = new int[input.size()];
 
@@ -75,11 +75,11 @@ public class TuringMachine {
         }
 
 
-        steps.add(new TuringStep(input, startingState,  startPosition , false));
+        steps.add(new TuringStep(input, startingState, startPosition, false));
 
         boolean stepPerformed = true;
 
-        for (int i = 0; i < maxNumberOfSteps && stepPerformed; i++){
+        for (int i = 0; i < maxNumberOfSteps && stepPerformed; i++) {
             stepPerformed = doStepAndAddToList(steps);
         }
 
@@ -93,14 +93,14 @@ public class TuringMachine {
      * @return the boolean
      */
     private boolean doStepAndAddToList(List<TuringStep> steps) {
-        TuringStep previousStep = steps.get(steps.size()-1);
+        TuringStep previousStep = steps.get(steps.size() - 1);
         List<TuringTask> foundTasks = findTasks(previousStep);
 
         boolean stepDone = false;
 
         boolean ndtm = foundTasks.size() > 1;
 
-        if (foundTasks.size() > 0){
+        if (foundTasks.size() > 0) {
             //Get a random task for ndtm-situations where more than one task was found.
             Collections.shuffle(foundTasks);
             TuringTask chosenTask = foundTasks.get(0);
@@ -112,7 +112,7 @@ public class TuringMachine {
             String nextState = chosenTask.getOutputState();
 
             //handle content of the bands
-            for (int i = 0; i < nextPosition.length; i++){
+            for (int i = 0; i < nextPosition.length; i++) {
                 StringBuilder stringBuilder = new StringBuilder(previousStep.getBands().get(i));
                 stringBuilder.setCharAt(previousStep.getPosition()[i], chosenTask.getOutputSymbols().charAt(i));
                 String currentBand = stringBuilder.toString();
@@ -120,11 +120,11 @@ public class TuringMachine {
             }
 
             //handle positions
-            for (int i = 0; i < nextPosition.length; i++){
+            for (int i = 0; i < nextPosition.length; i++) {
                 char currentDirection = chosenTask.getDirections().toLowerCase().charAt(i);
-                if (currentDirection == 'r'){
+                if (currentDirection == 'r') {
                     nextPosition[i] = previousStep.getPosition()[i] + 1;
-                } else if (currentDirection == 'l'){
+                } else if (currentDirection == 'l') {
                     nextPosition[i] = previousStep.getPosition()[i] - 1;
                 } else {
                     nextPosition[i] = previousStep.getPosition()[i];
@@ -132,16 +132,16 @@ public class TuringMachine {
             }
 
             //if the position reached the corner of a band, append an empty_field-Symbol to it
-            for (int i = 0; i < nextPosition.length; i++){
-                if (nextPosition[i] == 0 ){
+            for (int i = 0; i < nextPosition.length; i++) {
+                if (nextPosition[i] == 0) {
                     nextBands.set(i, EMPTY_FIELD + nextBands.get(i));
-                    nextPosition[i] =  1;
-                } else if (nextPosition[i] ==  nextBands.get(i).length()-1) {
+                    nextPosition[i] = 1;
+                } else if (nextPosition[i] == nextBands.get(i).length() - 1) {
                     nextBands.set(i, nextBands.get(i) + EMPTY_FIELD);
                 }
             }
 
-            steps.add(new TuringStep(nextBands, nextState, nextPosition,ndtm));
+            steps.add(new TuringStep(nextBands, nextState, nextPosition, ndtm));
             stepDone = true;
         }
 
@@ -156,11 +156,11 @@ public class TuringMachine {
      * @param step the step
      * @return the list
      */
-    private List<TuringTask> findTasks(TuringStep step){
+    private List<TuringTask> findTasks(TuringStep step) {
         List<TuringTask> foundTasks = new ArrayList<TuringTask>();
-        for (TuringTask task : tasks){
+        for (TuringTask task : tasks) {
             if (step.getState().equals(task.getInputState())
-                    && step.getSymbolsAtCurrentPositions().equals(task.getInputSymbols())){
+                    && step.getSymbolsAtCurrentPositions().equals(task.getInputSymbols())) {
                 foundTasks.add(task);
             }
         }

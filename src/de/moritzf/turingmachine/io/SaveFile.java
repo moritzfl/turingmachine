@@ -28,12 +28,13 @@ import javax.swing.JOptionPane;
 
 /**
  * <p>
- *         The Class SaveFile.
- *         Provides functionality for saving files. It is used to save latex files but
- *         can easily be used to save other textbased files aswell if that is needed
- *         in the future. If other LaTeX-packages are used in exported files, they
- *         should be added to the constant HEADER_LATEX
+ * The Class SaveFile.
+ * Provides functionality for saving files. It is used to save latex files but
+ * can easily be used to save other textbased files aswell if that is needed
+ * in the future. If other LaTeX-packages are used in exported files, they
+ * should be added to the constant HEADER_LATEX
  * </p>
+ *
  * @author Moritz Floeter
  */
 public class SaveFile {
@@ -52,12 +53,13 @@ public class SaveFile {
             + "\\tikzstyle{vertex}=[draw,fill=white,circle,minimum size=20pt,inner sep=0pt] \n\n"
             + "%\\Bearbeitet Format, sodass keine Einrueckung bei Paragraphen vorgenommen wird \n"
             + "\\usepackage{parskip} \n" + "\\setlength\\parindent{0pt} \n\n"
-            + "\\begin{document} \n\n";
+            + "\\begin{document} \n\n"
+            + "\n\n\n \\huge{\n";
 
     /**
      * The Constant FOOTER_LATEX.
      */
-    public static final String FOOTER_LATEX = "\n\\end{document}";
+    public static final String FOOTER_LATEX = "\n}\n\n\\end{document}";
 
     /**
      * Saves the String passed to it as LaTeX document by also adding the
@@ -88,8 +90,8 @@ public class SaveFile {
                 writer.write(body);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(parent, "Schreiben fehlgeschlagen",
-                    "Fehler", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Saving failed",
+                    "Error  ", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 if (writer != null) {
@@ -111,7 +113,7 @@ public class SaveFile {
      */
     private static File showSaveFileDialog(JFrame parent, String type) {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle(type + "-Datei speichern");
+        fileChooser.setDialogTitle("Save " + type + "-file");
 
         File fileToSave = null;
         boolean overwrite = false;
@@ -137,8 +139,8 @@ public class SaveFile {
                 int reply = JOptionPane
                         .showConfirmDialog(
                                 parent,
-                                "<html> Datei existiert bereits. Wollen sie die bestehende Datei wirklich &uuml;berschreiben?</html>",
-                                "Datei bereits vorhanden",
+                                "<html> File already exists. Do you really want to overwrite the existing file?</html>",
+                                "File already exists",
                                 JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     overwrite = true;
