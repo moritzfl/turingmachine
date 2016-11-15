@@ -140,7 +140,7 @@ public class LatexPanel extends JPanel {
     /**
      * Renders the formula.
      */
-    public void render() {
+    private void render() {
         String expressionUsed = "null";
         if (this.expression != null) {
             expressionUsed = this.expression;

@@ -42,7 +42,7 @@ public class SaveFile {
     /**
      * The Constant HEADER_LATEX.
      */
-    public static final String HEADER_LATEX = "\\documentclass{article} \n"
+    private static final String HEADER_LATEX = "\\documentclass{article} \n"
             + "\\usepackage{tikz} \n"
             + "\\usetikzlibrary{arrows,positioning, calc}\n"
             + "\\usetikzlibrary{trees} \n"
@@ -59,7 +59,7 @@ public class SaveFile {
     /**
      * The Constant FOOTER_LATEX.
      */
-    public static final String FOOTER_LATEX = "\n}\n\n\\end{document}";
+    private static final String FOOTER_LATEX = "\n}\n\n\\end{document}";
 
     /**
      * Saves the String passed to it as LaTeX document by also adding the
@@ -142,11 +142,7 @@ public class SaveFile {
                                 "<html> File already exists. Do you really want to overwrite the existing file?</html>",
                                 "File already exists",
                                 JOptionPane.YES_NO_OPTION);
-                if (reply == JOptionPane.YES_OPTION) {
-                    overwrite = true;
-                } else {
-                    overwrite = false;
-                }
+                overwrite = reply == JOptionPane.YES_OPTION;
             }
 
         } while (fileToSave != null && (fileToSave.exists() && !overwrite));

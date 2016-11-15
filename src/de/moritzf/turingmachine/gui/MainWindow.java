@@ -221,7 +221,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
      *
      * @return the bands input
      */
-    public List<String> getBandsInput() {
+    private List<String> getBandsInput() {
         if (bandsTxtArea.getText().isEmpty()) {
             bandsTxtArea.setText("*");
         }
@@ -236,7 +236,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
      *
      * @return the tasks input
      */
-    public List<TuringTask> getTasksInput() {
+    private List<TuringTask> getTasksInput() {
         int numberOfBands = getBandsInput().size();
         ArrayList<TuringTask> tasks = new ArrayList<>();
         String textAreaContent = taskListTxtArea.getText();

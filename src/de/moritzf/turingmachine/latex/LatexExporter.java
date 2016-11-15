@@ -23,6 +23,7 @@ import de.moritzf.turingmachine.logic.TuringStep;
 import java.util.List;
 
 /**
+ * Class LatexExporter. Handles conversion of TuringStep-lists to Latex exprssions.
  * Created by moritz on 10.11.16.
  */
 public class LatexExporter {
@@ -30,12 +31,12 @@ public class LatexExporter {
     /**
      * The constant MATRIX_SEPARATOR. This separator will be written between between each matrix.
      */
-    public static final String MATRIX_SEPARATOR = "$\\\\$";
+    private static final String MATRIX_SEPARATOR = "$\\\\$";
     /**
      * The constant MULTIBAND_SEPARATOR. This separator will be written between steps of a turingmachine with more than
      * one band.
      */
-    public static final String MULTIBAND_SEPARATOR = "\n$\\\\.....................\\\\$\n\n";
+    private static final String MULTIBAND_SEPARATOR = "\n$\\\\.....................\\\\$\n\n";
 
     /**
      * Generate latex string representing the steps of a list of TuringSteps.
