@@ -1,6 +1,8 @@
 #Turing 
 ###implementation of a Turingmachine
 
+![Screenshot](http://moritzf.de/resources/Turingmachine/turing-screenshot.png)
+
 This software is meant for teaching the principles of Turningmachines as a fundamental concept int the field of IT.
 
 The software is licensed under the terms of GPL3 because it uses JLaTeXMath for rendering the user interface. 
