@@ -56,7 +56,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
     private JSlider stepSlider = new JSlider(JSlider.HORIZONTAL, 10, 250, 100);
     private JLabel numberOfSteps = new JLabel("max. Steps = 100");
     private static final Highlighter.HighlightPainter ERROR_PAINTER =
-            new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
+            new DefaultHighlighter.DefaultHighlightPainter(Color.ORANGE);
 
     /**
      * Instantiates a new Main window.
