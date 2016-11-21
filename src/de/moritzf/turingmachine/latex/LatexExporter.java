@@ -38,6 +38,8 @@ public class LatexExporter {
      */
     private static final String MULTIBAND_SEPARATOR = "\n$\\\\.....................\\\\$\n\n";
 
+    private static final String NDTM_MARKER = "_\\boxdot";
+
     /**
      * Generate latex string representing the steps of a list of TuringSteps.
      *
@@ -62,11 +64,6 @@ public class LatexExporter {
     private static String generateSegmentForSingleBandContext(List<TuringStep> steps, int i) {
         String segment = "";
         TuringStep currentStep = steps.get(i);
-        TuringStep previousStep = null;
-        if (i > 0) {
-            previousStep = steps.get(i - 1);
-
-        }
 
 
         String currentBand = currentStep.getBands().get(0);
@@ -78,10 +75,7 @@ public class LatexExporter {
         if (!equalContent) {
             segment += "$\n\\begin{smallmatrix} \n";
             for (int j = 0; j < currentBand.length(); j++) {
-                segment += currentBand.charAt(j);
-                if (previousStep != null && currentStep.isNdtmStep() && j == previousStep.getPosition()[0]) {
-                    segment += "_\\boxdot";
-                }
+                segment += escapeChar(currentBand.charAt(j));
 
                 if (j < currentBand.length() - 1) {
                     segment += " & ";
@@ -101,7 +95,10 @@ public class LatexExporter {
 
             if (j == currentPosition) {
                 arrowPart += " \\uparrow ";
-                statePart += currentState;
+                statePart += escapeString(currentState);
+                if (i < steps.size() - 1 && steps.get(i + 1).isNdtmStep()) {
+                    statePart += NDTM_MARKER;
+                }
             }
 
             if (j < currentBand.length() - 1) {
@@ -132,11 +129,6 @@ public class LatexExporter {
         TuringStep currentStep = steps.get(i);
         List<String> currentBands = currentStep.getBands();
         String currentState = currentStep.getState();
-        TuringStep previousStep = null;
-        if (i > 0) {
-            previousStep = steps.get(i - 1);
-
-        }
 
 
         for (int j = 0; j < currentBands.size(); j++) {
@@ -148,11 +140,8 @@ public class LatexExporter {
 
             segment += "[" + (j + 1) + "] & ";
             for (int k = 0; k < currentBand.length(); k++) {
-                segment += currentBand.charAt(k);
+                segment += escapeChar(currentBand.charAt(k));
 
-                if (previousStep != null && currentStep.isNdtmStep() && k == previousStep.getPosition()[j]) {
-                    segment += "_\\boxdot";
-                }
 
                 if (k < currentBand.length() - 1) {
                     segment += " & ";
@@ -167,7 +156,10 @@ public class LatexExporter {
             for (int k = 0; k < currentBand.length(); k++) {
                 if (k == currentPosition) {
                     arrowPart += " \\uparrow  ";
-                    statePart += currentState;
+                    statePart += escapeString(currentState);
+                    if (i < steps.size() - 1 && steps.get(i + 1).isNdtmStep()) {
+                        statePart += NDTM_MARKER;
+                    }
                 }
 
                 if (k < currentBand.length() - 1) {
@@ -188,6 +180,35 @@ public class LatexExporter {
 
 
         return segment;
+    }
+
+    private static String escapeChar(char c) {
+        String escapedChar = Character.toString(c);
+        if (c == '&' || c == '%' || c == '$' || c == '#' || c == '_' || c == '{' || c == '}') {
+            escapedChar = "\\" + escapedChar;
+
+        } else if (c == '~') {
+            escapedChar = "\\sim";
+        } else if (c == '^') {
+            escapedChar = "\\wedge\n";
+        } else if (c == '\\') {
+            escapedChar = "\\backslash";
+        }
+
+        return escapedChar;
+
+    }
+
+
+    private static String escapeString(String text) {
+        String escapedString = "";
+
+        for (int i = 0; i < text.length(); i++) {
+            escapedString += escapeChar(text.charAt(i));
+        }
+
+        return escapedString;
+
     }
 
 }
