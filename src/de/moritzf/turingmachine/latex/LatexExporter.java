@@ -19,7 +19,9 @@
 package de.moritzf.turingmachine.latex;
 
 import de.moritzf.turingmachine.logic.TuringStep;
+import de.moritzf.turingmachine.logic.TuringTask;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -121,6 +123,22 @@ public class LatexExporter {
 
         return segment;
 
+    }
+
+
+    public static String generateTaskList(Collection<TuringTask> tasks){
+
+        String table = "\\begin{tabular}{lllll} \n"  ;
+
+        for (TuringTask task: tasks){
+            table += escapeString(task.getInputState()) + " & "  + escapeString(task.getInputSymbols()) + " & "
+                    + escapeString(task.getOutputSymbols()) + " & " + escapeString(task.getDirections())
+                    + " & " + escapeString(task.getOutputState()) + " \\\\ \n";
+        }
+
+        table += "\\end{tabular} \n"  ;
+
+        return table;
     }
 
     private static String generateSegmentForMultiBandContext(List<TuringStep> steps, int i) {

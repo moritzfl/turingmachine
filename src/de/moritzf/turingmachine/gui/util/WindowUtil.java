@@ -21,6 +21,7 @@ package de.moritzf.turingmachine.gui.util;
 import sun.awt.OSInfo;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -59,6 +60,22 @@ public class WindowUtil {
             } catch (Exception e) {
                 //OSX Fullscreen wil not be available
             }
+        }
+    }
+
+    public static void requestOSXFullscreen(Window window) {
+        try {
+            Class appClass = Class.forName("com.apple.eawt.Application");
+            Class params[] = new Class[]{};
+
+            Method getApplication = appClass.getMethod("getApplication", params);
+            Object application = getApplication.invoke(appClass);
+            Method requestToggleFulLScreen = application.getClass().getMethod("requestToggleFullScreen", Window.class);
+
+            requestToggleFulLScreen.invoke(application, window);
+        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException ex) {
+            ex.printStackTrace();
         }
     }
 
