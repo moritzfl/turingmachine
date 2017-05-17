@@ -195,6 +195,8 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
                 protocolPanel.setExpression(LatexExporter.generateLatex(steps));
                 this.validate();
                 this.repaint();
+
+
             }
         } else if (e.getSource().equals(increaseFontSize)) {
             protocolPanel.increaseFontSize();
