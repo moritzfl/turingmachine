@@ -1,6 +1,5 @@
 package de.moritzf.turingmachine.gui.util;
 
-import sun.awt.OSInfo;
 
 import javax.swing.*;
 
@@ -17,12 +16,12 @@ public class GeneralSettingsUtil {
      * Sets system look and feel.
      */
     public static void setSystemLookAndFeel() {
-        OSInfo.OSType osType = OSInfo.getOSType();
+
 
         // Set System look and feel according to the current OS
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            if (osType.equals(OSInfo.OSType.MACOSX)) {
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
                 activateMacMenu();
             }
         } catch (Exception e) {

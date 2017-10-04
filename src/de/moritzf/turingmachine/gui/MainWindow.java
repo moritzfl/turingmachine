@@ -30,7 +30,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -57,6 +60,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
     private JLabel numberOfSteps = new JLabel("max. Steps = 100");
     private static final Highlighter.HighlightPainter ERROR_PAINTER =
             new DefaultHighlighter.DefaultHighlightPainter(Color.ORANGE);
+    private UndoManager undoManager;
 
     /**
      * Instantiates a new Main window.
@@ -162,7 +166,7 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
 
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         mainpanel.add(split, BorderLayout.CENTER);
-
+        this.initUndoRedoFunctionality();
         this.setJMenuBar(menuBar);
         this.setSize(500, 500);
         WindowUtil.centerWindow(this);
@@ -282,6 +286,48 @@ public class MainWindow extends JFrame implements ActionListener, FocusListener,
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Instantiates a the undo-redo functionality for the textarea.
+     */
+    private void initUndoRedoFunctionality(){
+        undoManager = new UndoManager();
+        Document doc = taskListTxtArea.getDocument();
+        doc.addUndoableEditListener(e -> {
+            undoManager.addEdit(e.getEdit());
+        });
+
+        InputMap im = taskListTxtArea.getInputMap(JComponent.WHEN_FOCUSED);
+        ActionMap am = taskListTxtArea.getActionMap();
+
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "Undo");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "Redo");
+
+        am.put("Undo", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (undoManager.canUndo()) {
+                        undoManager.undo();
+                    }
+                } catch (CannotUndoException exp) {
+                    exp.printStackTrace();
+                }
+            }
+        });
+        am.put("Redo", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (undoManager.canRedo()) {
+                        undoManager.redo();
+                    }
+                } catch (CannotUndoException exp) {
+                    exp.printStackTrace();
+                }
+            }
+        });
     }
 
 

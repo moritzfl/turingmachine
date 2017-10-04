@@ -18,11 +18,11 @@
  */
 package de.moritzf.turingmachine.gui.util;
 
-import sun.awt.OSInfo;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 /**
  * WindowUtil.
@@ -50,8 +50,8 @@ public class WindowUtil {
      * @param window the window
      */
     public static void enableOSXFullscreen(Window window) {
-        OSInfo.OSType osType = OSInfo.getOSType();
-        if (osType.equals(OSInfo.OSType.MACOSX)) {
+
+        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
             try {
                 Class util = Class.forName("com.apple.eawt.FullScreenUtilities");
                 Class[] params = {Window.class, Boolean.TYPE};
@@ -78,5 +78,7 @@ public class WindowUtil {
             ex.printStackTrace();
         }
     }
+
+
 
 }
