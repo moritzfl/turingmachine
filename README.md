@@ -1,7 +1,7 @@
 # Turing 
 ### implementation of a Turingmachine
 
-![Screenshot](http://moritzf.de/files/projects/turing.png)
+![Screenshot](http://www.moritzf.de/projects/img/turing.png)
 
 This software is meant for teaching the principles of [turning-machines](https://en.wikipedia.org/wiki/Turing_machine) as a fundamental concept in the field of IT.
 
