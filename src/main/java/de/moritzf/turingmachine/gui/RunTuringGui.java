@@ -20,13 +20,14 @@ package de.moritzf.turingmachine.gui;
 
 import de.moritzf.turingmachine.gui.util.GeneralSettingsUtil;
 
+import javax.swing.*;
+
 /**
  * This class is used to start the application.
  */
 public class RunTuringGui {
 
     public static void main(String[] args){
-
         GeneralSettingsUtil.setSystemLookAndFeel();
         new MainWindow();
     }

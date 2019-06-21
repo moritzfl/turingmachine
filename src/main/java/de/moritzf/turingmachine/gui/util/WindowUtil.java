@@ -19,6 +19,7 @@
 package de.moritzf.turingmachine.gui.util;
 
 
+import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -49,36 +50,9 @@ public class WindowUtil {
      *
      * @param window the window
      */
-    public static void enableOSXFullscreen(Window window) {
-
+    public static void enableOSXFullscreen(JFrame window) {
         if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
-            try {
-                Class util = Class.forName("com.apple.eawt.FullScreenUtilities");
-                Class[] params = {Window.class, Boolean.TYPE};
-                Method method = util.getMethod("setWindowCanFullScreen", params);
-                method.invoke(util, new Object[]{window, Boolean.valueOf(true)});
-            } catch (Exception e) {
-                //OSX Fullscreen wil not be available
-            }
+            window.getRootPane().putClientProperty("apple.awt.fullscreenable", Boolean.valueOf(true));
         }
     }
-
-    public static void requestOSXFullscreen(Window window) {
-        try {
-            Class appClass = Class.forName("com.apple.eawt.Application");
-            Class params[] = new Class[]{};
-
-            Method getApplication = appClass.getMethod("getApplication", params);
-            Object application = getApplication.invoke(appClass);
-            Method requestToggleFulLScreen = application.getClass().getMethod("requestToggleFullScreen", Window.class);
-
-            requestToggleFulLScreen.invoke(application, window);
-        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-
 }

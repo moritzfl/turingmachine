@@ -1,7 +1,11 @@
 package de.moritzf.turingmachine.gui.util;
 
 
+
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 /**
@@ -17,15 +21,22 @@ public class GeneralSettingsUtil {
      */
     public static void setSystemLookAndFeel() {
 
-
         // Set System look and feel according to the current OS
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                try {
+                    UIManager.setLookAndFeel("org.violetlib.aqua.AquaLookAndFeel");
+                } catch (Exception e) {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                }
                 activateMacMenu();
+            } else {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
+
         } catch (Exception e) {
             //no "system like" style will be available
+            e.printStackTrace();
         }
     }
 
@@ -34,7 +45,36 @@ public class GeneralSettingsUtil {
      */
     public static void activateMacMenu() {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
-        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Test");
+    }
+
+    public static boolean isDarkModeActive() {
+        final Process p;
+        boolean darkMode = false;
+        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+            StringBuilder output = new StringBuilder();
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command("defaults", "read", "-g", "AppleInterfaceStyle");
+                Process process = processBuilder.start();
+
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + "\n");
+                }
+
+                int exitVal = process.waitFor();
+                darkMode = exitVal == 0 && output.toString().contains("Dark");
+            } catch (IOException | InterruptedException e) {
+                //Nothing to do here
+            }
+
+            System.out.println("Mode" + output.toString() + "Mode");
+        }
+
+        return darkMode;
+
     }
 
 
