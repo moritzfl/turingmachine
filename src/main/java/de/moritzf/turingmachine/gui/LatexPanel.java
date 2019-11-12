@@ -152,6 +152,8 @@ public class LatexPanel extends JPanel {
 
             TeXIcon ticon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, fontSizeTex, TeXConstants.UNIT_PIXEL, 80,
                     TeXConstants.ALIGN_LEFT);
+            ticon.setForeground(Color.BLACK);
+            this.setBackground(Color.WHITE);
             this.removeAll();
             this.add(new JLabel(ticon));
 
