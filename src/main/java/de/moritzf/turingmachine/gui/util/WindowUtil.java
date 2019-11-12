@@ -51,7 +51,7 @@ public class WindowUtil {
      * @param window the window
      */
     public static void enableOSXFullscreen(JFrame window) {
-        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+        if (OsUtil.getOperatingSystemType().equals(OsUtil.OSType.MacOS)) {
             window.getRootPane().putClientProperty("apple.awt.fullscreenable", Boolean.valueOf(true));
         }
     }
