@@ -39,7 +39,7 @@ dependencies {
 }
 
 group = 'com.github.moritzfl'
-version = '1.2'
+version = '1.2.1'
 description = 'turingmachine'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
