@@ -5,7 +5,7 @@
 plugins {
     id 'java'
     id 'edu.sc.seis.launch4j' version '2.4.6'
-    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'application'
     id "edu.sc.seis.macAppBundle" version "2.3.0"
 }
@@ -14,14 +14,11 @@ application {
     mainClassName = 'de.moritzf.turingmachine.gui.RunTuringGui'
 }
 
-run {
-    args = ['-NSRequiresAquaSystemAppearance','False']
-}
 
 repositories {
     mavenLocal()
     maven {
-        url = 'http://central.maven.org/maven2/'
+        url = 'https://central.maven.org/maven2/'
     }
 
     maven {
@@ -29,17 +26,16 @@ repositories {
     }
 
     maven {
-        url = 'http://repo.maven.apache.org/maven2'
+        url = 'https://repo.maven.apache.org/maven2'
     }
 }
 
 dependencies {
-    compile 'org.scilab.forge:jlatexmath:1.0.7'
-    compile 'com.bulenkov:darcula:2018.2'
+    implementation 'org.scilab.forge:jlatexmath:1.0.7'
 }
 
 group = 'com.github.moritzfl'
-version = '1.2.1'
+version = '1.2.2'
 description = 'turingmachine'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
